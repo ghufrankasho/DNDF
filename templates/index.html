@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Classification App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Bank Classification App</h1>
+
+    <form method="POST" action="/classify">
+        <h2 for="row_index">Select row number (0 to 87):</h2>
+        <input type="number" id="row_index" name="row_index" min="0" max="87" value="0">
+        <button type="submit">Classify Selected Row</button>
+    </form>
+
+    {% if selected_row %}
+        <h2>Selected Row Data:</h2>
+        <pre>{{ selected_row }}</pre>
+        <h2>Classification Result:</h2>
+        <p>{{ classification_result }}</p>
+    {% endif %}
+
+
+    <hr>
+
+    <h2>Classify Custom Data</h2>
+    <form method="POST" action="/classify_custom">
+           <div class="form-group">
+        {% for i in range(9) %}
+
+             <label for="feature_{{ i }}">X {{ i + 1 }}:</label>
+            <input type="number" id="feature_{{ i }}" name="feature_{{ i }}"><br>
+
+
+        {% endfor %}
+
+        <label  >Nopat:</label>
+        <input type="number" id="feature_9" name="feature_9" ><br>
+        <label  >WACC:</label>
+        <input type="number" id="feature_10" name="feature_10" ><br>
+        <label  >IC:</label>
+        <input type="number" id="feature_11" name="feature_11" ><br>
+        <button type="submit">Classify Custom Data</button>
+               </div>
+    </form>
+
+    {% if custom_classification_result %}
+        <h2>Custom Classification Result:</h2>
+        <p>{{ custom_classification_result }}</p>
+    {% endif %}
+</body>
+</html>

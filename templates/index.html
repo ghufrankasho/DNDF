@@ -5,50 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank Classification App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .highlight {
+            background-color: #f9f9f9;
+            color: #333;
+            font-family: monospace;
+        }
+        .result-good {
+            color: green;
+        }
+        .result-bad {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <h1>Bank Classification App</h1>
 
     <form method="POST" action="/classify">
-        <h2 for="row_index">Select row number (0 to 87):</h2>
-        <input type="number" id="row_index" name="row_index" min="0" max="87" value="0">
+        <h2>Select row number (0 to 87):</h2>
+        <label for="row_index">Row Index:</label>
+        <input type="number" id="row_index" name="row_index" min="0" max="87" onchange="setNumber()" >
         <button type="submit">Classify Selected Row</button>
     </form>
 
     {% if selected_row %}
         <h2>Selected Row Data:</h2>
-        <pre>{{ selected_row }}</pre>
-        <h2>Classification Result:</h2>
-        <p>{{ classification_result }}</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in selected_row.items() %}
+                    <tr class="highlight">
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Classification Result: <span class="{{ 'result-good' if classification_result == 'good' else 'result-bad' }}">{{ classification_result }}</span></h2>
     {% endif %}
-
 
     <hr>
 
     <h2>Classify Custom Data</h2>
     <form method="POST" action="/classify_custom">
-           <div class="form-group">
-        {% for i in range(9) %}
-
-             <label for="feature_{{ i }}">X {{ i + 1 }}:</label>
-            <input type="number" id="feature_{{ i }}" name="feature_{{ i }}"><br>
-
-
-        {% endfor %}
-
-        <label  >Nopat:</label>
-        <input type="number" id="feature_9" name="feature_9" ><br>
-        <label  >WACC:</label>
-        <input type="number" id="feature_10" name="feature_10" ><br>
-        <label  >IC:</label>
-        <input type="number" id="feature_11" name="feature_11" ><br>
-        <button type="submit">Classify Custom Data</button>
-               </div>
+        <div class="form-group">
+            {% for i in range(9) %}
+                <label for="feature_{{ i }}">X {{ i + 1 }}:</label>
+                <input type="number" id="feature_{{ i }}" name="feature_{{ i }}"><br>
+            {% endfor %}
+            <label for="feature_9">Nopat:</label>
+            <input type="number" id="feature_9" name="feature_9"><br>
+            <label for="feature_10">WACC:</label>
+            <input type="number" id="feature_10" name="feature_10"><br>
+            <label for="feature_11">IC:</label>
+            <input type="number" id="feature_11" name="feature_11"><br>
+            <button type="submit">Classify Custom Data</button>
+        </div>
     </form>
 
     {% if custom_classification_result %}
-        <h2>Custom Classification Result:</h2>
-        <p>{{ custom_classification_result }}</p>
+        <h2>Custom Classification Result: <span class="{{ 'result-good' if custom_classification_result == 'good' else 'result-bad' }}">{{ custom_classification_result }}</span></h2>
     {% endif %}
 </body>
+
+<script></sc
+>
 </html>

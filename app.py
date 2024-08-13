@@ -18,7 +18,7 @@ def process_data(df):
     df_copy['Y'].replace('b', 0, inplace=True)
     X = df_copy.iloc[:88, 0:12]
     y = df_copy.iloc[:88, 12:13]
-    scaler = MinMaxScaler()
+    # scaler = MinMaxScaler()
     # X_train_scaled = scaler.fit_transform(X)
     return X, df, y, scaler
 

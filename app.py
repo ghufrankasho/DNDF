@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 import pandas as pd
 import numpy as np
 import keras
-from sklearn.preprocessing import MinMaxScaler
+# from sklearn.preprocessing import MinMaxScaler
 
 app = Flask(__name__)
 
@@ -19,8 +19,8 @@ def process_data(df):
     X = df_copy.iloc[:88, 0:12]
     y = df_copy.iloc[:88, 12:13]
     scaler = MinMaxScaler()
-    X_train_scaled = scaler.fit_transform(X)
-    return X_train_scaled, df, y, scaler
+    # X_train_scaled = scaler.fit_transform(X)
+    return X, df, y, scaler
 
 data = pd.read_csv('old_Dataset.csv')
 X, data, y, scaler = process_data(data)

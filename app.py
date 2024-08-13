@@ -2,13 +2,16 @@ from flask import Flask, request, render_template
 import pandas as pd
 import numpy as np
 import keras
-# from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler
 
 app = Flask(__name__)
 
 # Load your trained model
-
-
+# import os
+# print("hello world")
+# import tensorflow as tf
+# print(os.getcwd())
+# model =  tf.keras.models.load_model('EVAallvar.keras')
 model = keras.models.load_model('EVAallvar.keras')
 
 # Load and process your dataset
@@ -18,9 +21,9 @@ def process_data(df):
     df_copy['Y'].replace('b', 0, inplace=True)
     X = df_copy.iloc[:88, 0:12]
     y = df_copy.iloc[:88, 12:13]
-    # scaler = MinMaxScaler()
-    # X_train_scaled = scaler.fit_transform(X)
-    return X, df, y, scaler
+    scaler = MinMaxScaler()
+    X_train_scaled = scaler.fit_transform(X)
+    return X_train_scaled, df, y, scaler
 
 data = pd.read_csv('old_Dataset.csv')
 X, data, y, scaler = process_data(data)

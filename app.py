@@ -7,8 +7,11 @@ from sklearn.preprocessing import MinMaxScaler
 app = Flask(__name__)
 
 # Load your trained model
-
-
+# import os
+# print("hello world")
+# import tensorflow as tf
+# print(os.getcwd())
+# model =  tf.keras.models.load_model('EVAallvar.keras')
 model = keras.models.load_model('EVAallvar.keras')
 
 # Load and process your dataset

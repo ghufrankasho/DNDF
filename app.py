@@ -54,5 +54,7 @@ def classify_custom():
     result = classify_row(user_input_scaled[0])
     return render_template('index.html', row_data=data.to_dict(orient='records'), custom_classification_result=result)
 
+import os
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
